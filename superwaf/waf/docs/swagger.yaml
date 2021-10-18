@@ -1,0 +1,309 @@
+definitions:
+  main.Resp:
+    properties:
+      code:
+        type: integer
+      data:
+        type: object
+      message:
+        type: string
+    type: object
+  main.WafList:
+    properties:
+      id:
+        type: integer
+      listinfo:
+        type: string
+      listname:
+        type: string
+    type: object
+  main.WafLists:
+    properties:
+      listinfo:
+        items:
+          type: string
+        type: array
+      listname:
+        type: string
+    type: object
+  main.WafLog:
+    properties:
+      client:
+        type: string
+      dtime:
+        type: string
+      message:
+        type: string
+      type:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/Updatelistinfo:
+    post:
+      consumes:
+      - application/json
+      description: 格式：POST /api/v1/Updatelistinfo
+      parameters:
+      - description: 参数
+        in: body
+        name: WafLists
+        required: true
+        schema:
+          $ref: '#/definitions/main.WafLists'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Resp'
+      summary: 修改名单列表(会同步刷新缓存和推送waf)
+  /api/v1/addlistinfo:
+    post:
+      consumes:
+      - application/json
+      description: 格式：POST /api/v1/addlistinfo
+      parameters:
+      - description: 参数
+        in: body
+        name: WafList
+        required: true
+        schema:
+          $ref: '#/definitions/main.WafList'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Resp'
+      summary: 增加名单元素(会同步刷新缓存和推送waf)
+  /api/v1/cachesync:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        格式：get /api/v1/cachesync?pushwaf=yes|no
+        参数pushwaf可选，默认为yes，即缓存同步redis后推送至waf。no为不推送
+      parameters:
+      - description: 可选参数
+        in: query
+        name: pushwaf
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Resp'
+      summary: waf缓存同步
+  /api/v1/dellistinfo:
+    post:
+      consumes:
+      - application/json
+      description: 格式：POST /api/v1/dellistinfo
+      parameters:
+      - description: 参数
+        in: body
+        name: WafList
+        required: true
+        schema:
+          $ref: '#/definitions/main.WafList'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Resp'
+      summary: 删除名单元素(会同步刷新缓存和推送waf)
+  /api/v1/disablelock:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        格式：get /api/v1/disablelock?key=
+        不能为空字段：key
+      parameters:
+      - description: 锁名称
+        in: query
+        name: key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Resp'
+      summary: 关锁
+  /api/v1/disablelocklist:
+    get:
+      consumes:
+      - application/json
+      description: 格式：get /api/v1/disablelocklist
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Resp'
+      summary: 关闭状态锁列表
+  /api/v1/enablelock:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        格式：get /api/v1/enablelock?key=
+        不能为空字段：key
+      parameters:
+      - description: 锁名称
+        in: query
+        name: key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Resp'
+      summary: 开锁
+  /api/v1/enablelocklist:
+    get:
+      consumes:
+      - application/json
+      description: 格式：GET /api/v1/enablelocklist
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Resp'
+      summary: 开启状态锁列表
+  /api/v1/getalllistinfo:
+    get:
+      consumes:
+      - application/json
+      description: 格式：get /api/v1/getalllistinfo
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Resp'
+      summary: 获取名单列表
+  /api/v1/getlistinfo:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        格式：get /api/v1/getlistinfo?key=
+        不能为空字段：key
+      parameters:
+      - description: 锁名称
+        in: query
+        name: key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Resp'
+      summary: 获取单个名单列表
+  /api/v1/getlistnamelists:
+    get:
+      consumes:
+      - application/json
+      description: 格式：get /api/v1/getlistnamelists
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Resp'
+      summary: 获取名单名称列表
+  /api/v1/wafclientlist:
+    get:
+      consumes:
+      - application/json
+      description: 格式：get /api/v1/wafclientlist
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Resp'
+      summary: 获取在线waf client列表
+  /api/v1/wafclientstart:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        格式：get /api/v1/wafclientstart?host=x.x.x.x:port
+        host参数不能为空，用于标识本机
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Resp'
+      summary: 客户端启动通知接口
+  /api/v1/waflog:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        格式：POST /api/v1/waflog
+        不能为空字段：key
+      parameters:
+      - description: 相关信息
+        in: body
+        name: WafLog
+        required: true
+        schema:
+          $ref: '#/definitions/main.WafLog'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Resp'
+      summary: 设置waf地址
+  /api/v1/wafsync:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        格式：get /api/v1/wafsync?host=xxx
+        host非必须参数，有参数时同步指定节点，无参数时同步所有节点
+        host列表获取接口：get /api/v1/wafclientlist
+      parameters:
+      - description: 主机
+        in: query
+        name: host
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Resp'
+      summary: waf客户端同步
+swagger: "2.0"

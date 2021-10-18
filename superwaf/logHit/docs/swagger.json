@@ -1,0 +1,371 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Superwaf project api document",
+        "title": "Superwaf-logHit",
+        "contact": {
+            "name": "API Support"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/v1/addlistpoint": {
+            "post": {
+                "description": "格式：POST /api/v1/addlistpoint\n不能为空字段：key,value",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "添加列表元素",
+                "parameters": [
+                    {
+                        "description": "相关信息",
+                        "name": "Keyinfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Keyinfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/main.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/dellistpoint": {
+            "post": {
+                "description": "格式：POST /api/v1/dellistpoint\n不能为空字段：key,value",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "列表中删除元素",
+                "parameters": [
+                    {
+                        "description": "相关信息",
+                        "name": "Keyinfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Keyinfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/main.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/getalllist": {
+            "get": {
+                "description": "格式：get /api/v1/getalllist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "获取名单名称列表",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/main.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/getalllock": {
+            "get": {
+                "description": "格式：get /api/v1/getalllock",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "获取锁名称列表",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/main.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/getlistpoint": {
+            "post": {
+                "description": "格式：POST /api/v1/getlistpoint\n不能为空字段：key",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "获取列表元素",
+                "parameters": [
+                    {
+                        "description": "相关信息",
+                        "name": "Keyinfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Keyinfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/main.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/getlockstate": {
+            "post": {
+                "description": "格式：POST /api/v1/getlockstate\n不能为空字段：Lock",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "查询锁状态",
+                "parameters": [
+                    {
+                        "description": "相关信息",
+                        "name": "Keyinfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Keyinfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/main.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/getmeminfo": {
+            "post": {
+                "description": "格式：POST /api/v1/getmeminfo\n不能为空字段：key",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "获取内存元素",
+                "parameters": [
+                    {
+                        "description": "相关信息",
+                        "name": "Keyinfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Keyinfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/main.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/health": {
+            "get": {
+                "description": "格式：get /api/v1/health",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "waf与nginx健康检查",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/main.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/lockdisable": {
+            "post": {
+                "description": "格式：POST /api/v1/lockdisable\n不能为空字段：Lock",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "关锁",
+                "parameters": [
+                    {
+                        "description": "相关信息",
+                        "name": "Keyinfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Keyinfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/main.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/lockenable": {
+            "post": {
+                "description": "格式：POST /api/v1/lockenable\n不能为空字段：Lock",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "开锁",
+                "parameters": [
+                    {
+                        "description": "相关信息",
+                        "name": "Keyinfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Keyinfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/main.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/setwafurl": {
+            "post": {
+                "description": "格式：POST /api/v1/setwafurl\n不能为空字段：key",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "设置waf地址",
+                "parameters": [
+                    {
+                        "description": "相关信息",
+                        "name": "Keyinfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Keyinfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/main.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/wafrulesync": {
+            "get": {
+                "description": "格式：get /api/v1/wafrulesync",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "从redis同步规则到waf",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/main.Response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.Keyinfo": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "description": "键",
+                    "type": "string"
+                },
+                "lock": {
+                    "description": "锁",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "值",
+                    "type": "string"
+                }
+            }
+        },
+        "main.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "object"
+                }
+            }
+        }
+    }
+}

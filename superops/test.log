@@ -1,0 +1,7 @@
+{"level":"info","ts":1622703708.0475578,"msg":"数据库连接成功","Dbinfo":"pencoo:309745197@tcp(106.75.169.216:33306)/pencoo?charset=utf8mb4&parseTime=True&loc=Local"}
+{"level":"info","ts":1622703713.004562,"msg":"redis连接成功"}
+{"level":"debug","ts":1622703713.049356,"msg":"sql","module":"gorm","type":"sql","src":"/Volumes/data/Go/pkg/mod/github.com/casbin/gorm-adapter@v1.0.0/adapter.go:207","duration":0.011483401,"sql":"SELECT * FROM `casbin_rule`  ","values":null,"rows_returned":0}
+{"level":"info","ts":1622705268.969078,"msg":"[GIN]","statusCode":204,"latency":"8.265µs","clientIP":"127.0.0.1","method":"OPTIONS","path":"/api/v1/login","error":""}
+{"level":"debug","ts":1622705268.9953642,"msg":"sql","module":"gorm","type":"sql","src":"/Volumes/data/git/Superops/superops/modules/Usermanager.go:86","duration":0.024101767,"sql":"SELECT * FROM `users`  WHERE (`username` = ? and `password` = ? and `ustat` = 1)","values":["pengbilong","2f5de15afa18f94eb283ba7a366661f1"],"rows_returned":1}
+{"level":"info","ts":1622705269.0295308,"msg":"用户登录成功","path":"/api/v1/login","Access-Token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InBlbmdiaWxvbmciLCJleHAiOjE2MjI5OTUxOTl9.NQHnCMa4-fNBAVOkQBGm3yGBwbv7CpRkC1Cho2GreZg","data":{"username":"pengbilong","autograph":"运维战斗机","email":"309745@qq.com","phone":"13000000000","context":"运维工程师"}}
+{"level":"info","ts":1622705269.029841,"msg":"[GIN]","statusCode":200,"latency":"58.8282ms","clientIP":"127.0.0.1","method":"POST","path":"/api/v1/login","error":""}

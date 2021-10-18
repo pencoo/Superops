@@ -1,0 +1,256 @@
+definitions:
+  main.Keyinfo:
+    properties:
+      key:
+        description: 键
+        type: string
+      lock:
+        description: 锁
+        type: string
+      value:
+        description: 值
+        type: string
+    type: object
+  main.Response:
+    properties:
+      code:
+        type: integer
+      message:
+        type: object
+    type: object
+info:
+  contact:
+    name: API Support
+  description: Superwaf project api document
+  title: Superwaf-logHit
+  version: "1.0"
+paths:
+  /api/v1/addlistpoint:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        格式：POST /api/v1/addlistpoint
+        不能为空字段：key,value
+      parameters:
+      - description: 相关信息
+        in: body
+        name: Keyinfo
+        required: true
+        schema:
+          $ref: '#/definitions/main.Keyinfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Response'
+      summary: 添加列表元素
+  /api/v1/dellistpoint:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        格式：POST /api/v1/dellistpoint
+        不能为空字段：key,value
+      parameters:
+      - description: 相关信息
+        in: body
+        name: Keyinfo
+        required: true
+        schema:
+          $ref: '#/definitions/main.Keyinfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Response'
+      summary: 列表中删除元素
+  /api/v1/getalllist:
+    get:
+      consumes:
+      - application/json
+      description: 格式：get /api/v1/getalllist
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Response'
+      summary: 获取名单名称列表
+  /api/v1/getalllock:
+    get:
+      consumes:
+      - application/json
+      description: 格式：get /api/v1/getalllock
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Response'
+      summary: 获取锁名称列表
+  /api/v1/getlistpoint:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        格式：POST /api/v1/getlistpoint
+        不能为空字段：key
+      parameters:
+      - description: 相关信息
+        in: body
+        name: Keyinfo
+        required: true
+        schema:
+          $ref: '#/definitions/main.Keyinfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Response'
+      summary: 获取列表元素
+  /api/v1/getlockstate:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        格式：POST /api/v1/getlockstate
+        不能为空字段：Lock
+      parameters:
+      - description: 相关信息
+        in: body
+        name: Keyinfo
+        required: true
+        schema:
+          $ref: '#/definitions/main.Keyinfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Response'
+      summary: 查询锁状态
+  /api/v1/getmeminfo:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        格式：POST /api/v1/getmeminfo
+        不能为空字段：key
+      parameters:
+      - description: 相关信息
+        in: body
+        name: Keyinfo
+        required: true
+        schema:
+          $ref: '#/definitions/main.Keyinfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Response'
+      summary: 获取内存元素
+  /api/v1/health:
+    get:
+      consumes:
+      - application/json
+      description: 格式：get /api/v1/health
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Response'
+      summary: waf与nginx健康检查
+  /api/v1/lockdisable:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        格式：POST /api/v1/lockdisable
+        不能为空字段：Lock
+      parameters:
+      - description: 相关信息
+        in: body
+        name: Keyinfo
+        required: true
+        schema:
+          $ref: '#/definitions/main.Keyinfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Response'
+      summary: 关锁
+  /api/v1/lockenable:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        格式：POST /api/v1/lockenable
+        不能为空字段：Lock
+      parameters:
+      - description: 相关信息
+        in: body
+        name: Keyinfo
+        required: true
+        schema:
+          $ref: '#/definitions/main.Keyinfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Response'
+      summary: 开锁
+  /api/v1/setwafurl:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        格式：POST /api/v1/setwafurl
+        不能为空字段：key
+      parameters:
+      - description: 相关信息
+        in: body
+        name: Keyinfo
+        required: true
+        schema:
+          $ref: '#/definitions/main.Keyinfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Response'
+      summary: 设置waf地址
+  /api/v1/wafrulesync:
+    get:
+      consumes:
+      - application/json
+      description: 格式：get /api/v1/wafrulesync
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/main.Response'
+      summary: 从redis同步规则到waf
+swagger: "2.0"

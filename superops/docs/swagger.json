@@ -1,0 +1,3261 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Superops project api document",
+        "title": "Superops-system",
+        "contact": {
+            "name": "API Support",
+            "url": "http://127.0.0.1:8080/api/v1/swagger/index.html"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "127.0.0.1:8080",
+    "paths": {
+        "/api/v1/Project/controlk8sproject": {
+            "get": {
+                "description": "格式：GET /api/v1/Project/controlk8sproject?project=xxx\u0026do=1|2\nproject：项目名称\ndo：1表示激活项目，2表示禁用项目",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "激活、禁用k8s项目",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Projects名称",
+                        "name": "project",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "操作",
+                        "name": "do",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/Project/createk8sproject": {
+            "post": {
+                "description": "格式：POST /api/v1/Project/createk8sproject\n不可为空字段：project、jenkins、repository\njenkins获取接口：/api/v1/service/getjenkinsnamelist\nrepository获取接口：/api/v1/service/getharbornamelist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "新增k8s项目",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Projects参数",
+                        "name": "modules.Projects",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/modules.Projects"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/Project/getk8sprojectlist": {
+            "get": {
+                "description": "格式：GET /api/v1/Project/getk8sprojectlist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "查询k8s项目列表(管理员表格)（此接口会刷新项目列表缓存）",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/Project/getk8sprojectnamelist": {
+            "get": {
+                "description": "格式：GET /api/v1/Project/getk8sprojectnamelist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "管理员查询k8s项目名称列表（此接口会刷新项目列表缓存）",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/Project/k8sprojectcontrolapp": {
+            "get": {
+                "description": "格式：GET /api/v1/Project/k8sprojectcontrolapp?project=xxx\u0026appname=xxx\u0026type=1|2\n必须字段：project项目名称、appname应用名称、type：1：启用，2：禁用",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "启用或禁用k8s应用",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/Project/k8sprojectcreateapp": {
+            "post": {
+                "description": "格式：POST /api/v1/Project/k8sprojectcreateapp\n必须字段：project、appname、langtype、dtmp、giturl、gituser、gitpass、gittoken、route\nlangtype获取url：\ndtmp获取url：",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "新增k8s应用",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "项目应用信息",
+                        "name": "modules.ProjectApps",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/modules.ProjectApps"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/Project/k8sprojectcreateuser": {
+            "post": {
+                "description": "格式：POST /api/v1/Project/k8sprojectcreateuser\n获取用户列表接口：",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "给k8s项目新增用户",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Projects新增用户信息",
+                        "name": "Pcu",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/v1.Pcu"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/Project/k8sprojectdeleteuser": {
+            "post": {
+                "description": "格式：POST /api/v1/Project/k8sprojectdeleteuser",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "给k8s项目删除用户",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Projects删除用户信息名称",
+                        "name": "Pcu",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/v1.Pcu"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/Project/k8sprojectgetapplist": {
+            "get": {
+                "description": "格式：GET /api/v1/Project/k8sprojectgetapplist?project=xxx\n必须字段：project项目名称",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "管理员获取k8s项目应用(未完成待续。。。)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/Project/k8sprojectgetuserslist": {
+            "get": {
+                "description": "格式：GET /api/v1/Project/k8sprojectgetuserslist?project=xxx\nproject：项目名称，必须参数",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "查询k8s项目用户列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Projects名称",
+                        "name": "Pcu",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/v1.Pcu"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/Project/k8sprojectoutuserslist": {
+            "get": {
+                "description": "格式：GET /api/v1/Project/k8sprojectoutuserslist?project=xxx\nproject：项目名称，必须参数",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "查询k8s项目用户列表外的用户列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Projects名称",
+                        "name": "Pcu",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/v1.Pcu"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/Project/k8sprojectupdateapp": {
+            "post": {
+                "description": "格式：POST /api/v1/Project/k8sprojectupdateapp\n必须字段：project、appname\n不可修改字段：Id、state、ctime、username",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "更新k8s应用",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "项目应用信息",
+                        "name": "modules.ProjectApps",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/modules.ProjectApps"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/Project/selectk8sprojectinfo": {
+            "get": {
+                "description": "格式：GET /api/v1/Project/selectk8sprojectinfo?project=xxx\nproject：项目名称",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "查询k8s项目信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Projects名称",
+                        "name": "project",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/Project/updatek8sproject": {
+            "post": {
+                "description": "格式：POST /api/v1/Project/updatek8sproject\n不可为空字段：project\njenkins获取接口：/api/v1/service/getjenkinsnamelist\nrepository获取接口：/api/v1/service/getharbornamelist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "更新k8s项目",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Projects参数",
+                        "name": "modules.Projects",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/modules.Projects"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/Project/usergetk8sprojectnamelist": {
+            "get": {
+                "description": "格式：GET /api/v1/Project/usergetk8sprojectnamelist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "用户查询k8s项目名称列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cache/rebuild": {
+            "get": {
+                "description": "格式：GET /api/v1/cache/rebuild",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cache"
+                ],
+                "summary": "缓存重建",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户",
+                        "name": "user",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cache/rebuildprojectuserlist": {
+            "get": {
+                "description": "格式：GET /api/v1/cache/rebuildprojectuserlist?project=xxx\nproject：指定重建缓存的项目名称",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cache"
+                ],
+                "summary": "用户项目(指定)列表缓存重建",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目名称",
+                        "name": "project",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cache/rebuildprojectuserlists": {
+            "get": {
+                "description": "格式：GET /api/v1/cache/rebuildprojectuserlists",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cache"
+                ],
+                "summary": "用户项目(所有激活项目)列表缓存重建",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cache/rebuilduserapitoken": {
+            "get": {
+                "description": "格式：GET /api/v1/cache/rebuilduserapitoken",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cache"
+                ],
+                "summary": "刷新所有用户API token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cache/rebuilduserlist": {
+            "get": {
+                "description": "格式：GET /api/v1/cache/rebuilduserlist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cache"
+                ],
+                "summary": "用户列表缓存重建",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cmdb/controlkubeconfig": {
+            "get": {
+                "description": "格式：GET /api/v1/cmdb/controlkubeconfig?kubeconfig=xxx\u0026do=enable|disable",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cmdb"
+                ],
+                "summary": "启用或禁用kubeconfig文件(未完待续)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "kubeconfig名称",
+                        "name": "kubeconfig",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "使用enable或disable来启停",
+                        "name": "do",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cmdb/createkubeconfig": {
+            "post": {
+                "description": "格式：GET /api/v1/cmdb/createkubeconfig\n不可为空字段：kname、kenvrole、kconfig、comname\nhcomname获取接口：/api/v1/commands/getcommandsnamelist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cmdb"
+                ],
+                "summary": "添加kubeconfig文件",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "kubeconfig参数",
+                        "name": "modules.KubernetesConfigs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/modules.KubernetesConfigs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cmdb/deletekubeconfig": {
+            "get": {
+                "description": "格式：GET /api/v1/cmdb/deletekubeconfig?kubeconfig=xxx\nkubeconfig: 配置名称\n获取kubeconfig列表接口：/api/v1/cmdb/getkubeconfiglist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cmdb"
+                ],
+                "summary": "删除kubeconfig文件",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "kubeconfig名称",
+                        "name": "kubeconfig",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cmdb/getkubeconfig": {
+            "get": {
+                "description": "格式：GET /api/v1/cmdb/getkubeconfig?kubeconfig=xxx\nkubeconfig: 配置名称\n名称列表获取接口：GET /api/v1/cmdb/getkubeconfiglist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cmdb"
+                ],
+                "summary": "获取kubeconfig文件详情(单条详情)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "kubeconfig名称",
+                        "name": "kubeconfig",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cmdb/getkubeconfiglist": {
+            "get": {
+                "description": "格式：GET /api/v1/cmdb/getkubeconfiglist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cmdb"
+                ],
+                "summary": "获取kubeconfig表格(用于管理页面表格展示)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cmdb/getkubeconfiglistname": {
+            "get": {
+                "description": "格式：GET /api/v1/cmdb/getkubeconfiglistname?project=xxx",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cmdb"
+                ],
+                "summary": "获取kubeconfig名称列表(用于新增/修改项目选择k8s集群)功能未完成，待续...",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目名称",
+                        "name": "project",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cmdb/updatekubeconfig": {
+            "post": {
+                "description": "格式：GET /api/v1/cmdb/updatekubeconfig",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cmdb"
+                ],
+                "summary": "修改kubeconfig文件",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "kubeconfig配置信息",
+                        "name": "modules.KubernetesConfigs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/modules.KubernetesConfigs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/commands/controlcommand": {
+            "get": {
+                "description": "格式：GET /api/v1/commands/controlcommand?command=xxx\u0026type=0|1|2|3\ncommand: 命令名称\ntype: 0、查询无命令文件的命令，1、获取激活中的命令，2、获取禁用的命令，3、获取所有命令",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Commands"
+                ],
+                "summary": "命令启用或禁用",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "查询类型。0、查询无命令文件的命令，1、获取激活中的命令，2、获取禁用的命令，3、获取所有命令",
+                        "name": "type",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "需要禁用的命令名称",
+                        "name": "command",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/commands/createcommand": {
+            "post": {
+                "description": "格式：GET /api/v1/commands/createcommand",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Commands"
+                ],
+                "summary": "新增命令",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "命令信息",
+                        "name": "modules.Kubecmds",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/modules.Kubecmds"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/commands/createfile": {
+            "post": {
+                "description": "格式：GET /api/v1/commands/createfile?comname=xxx file=文件\n注意：需要先成功创建命令后，才能上传命令执行文件(命令必须是激活状态才能上传可执行文件)\ncomname是命令名称，获取接口：/api/v1/commands/getcommandsnamelist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Commands"
+                ],
+                "summary": "上传命令执行文件",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "命令名称",
+                        "name": "comname",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "命令文件",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/commands/delcommands": {
+            "get": {
+                "description": "格式：GET /api/v1/commands/delcommands?command=xxx\ncommand: 命令名称\ncommand获取接口：/api/v1/commands/getcommandsnamelist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Commands"
+                ],
+                "summary": "删除命令",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "删除命令名称",
+                        "name": "command",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/commands/getcommandslist": {
+            "get": {
+                "description": "格式：GET /api/v1/commands/getcommandslist?type=0|1|2|3\ntype: 0、查询无命令文件的命令，1、获取激活中的命令，2、获取禁用的命令，3、获取所有命令",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Commands"
+                ],
+                "summary": "获取命令列表(详情)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "查询类型",
+                        "name": "type",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/commands/getcommandsnamelist": {
+            "get": {
+                "description": "格式：GET /api/v1/commands/getcommandsnamelist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Commands"
+                ],
+                "summary": "获取激活命令名称列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/login": {
+            "post": {
+                "description": "可以使用格式:\n用户名+密码\n手机号+密码\n邮箱+密码\n例如：{\"username\":\"\",\"password\":\"\"}",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "用户登录接口",
+                "parameters": [
+                    {
+                        "description": "username、password用于登录验证",
+                        "name": "modules.Users",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/modules.Users"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/register": {
+            "post": {
+                "description": "必须参数：用户名、密码、手机、邮箱",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "用户注册接口",
+                "parameters": [
+                    {
+                        "description": "用户注册",
+                        "name": "modules.Users",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/modules.Users"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/Updateharbor": {
+            "post": {
+                "description": "格式：GET /api/v1/service/Updateharbor\n必须字段：Harbor(harbor名称)\n可选字段：Hurl(harbor地址)、Huser(harbor用户)、Hpass(harbor密码)\n可选字段：Dimgtimeout(开发镜像保留的时间默认7天，0天表示不过期需要手动清理harbor，单位是天)\n可选字段：Timgtimeout(测试镜像保留的时间默认30天，0天表示不过期需要手动清理harbor，单位是天)\n可选字段：Timgtimeout(生产镜像保留的时间默认90天，0天表示不过期需要手动清理harbor，单位是天)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "修改harbor",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Harbors参数",
+                        "name": "modules.Harbors",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/modules.Harbors"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/controljenkinsjobs": {
+            "get": {
+                "description": "格式：GET /api/v1/service/controljenkinsjobs\njenkins：jenkins名称\njobname：job名称(应用名称)\ntype: 1：启用，2：禁用\n启用或禁用jenkins：jenkins、jobname、type不能为空",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "启用、禁用jenkins job",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "jenkins job操作信息",
+                        "name": "JenkinsJobDo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/v1.JenkinsJobDo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/createharbor": {
+            "post": {
+                "description": "格式：GET /api/v1/service/createharbor\n必须字段：Harbor(harbor名称)、Hurl(harbor地址)、Huser(harbor用户)、Hpass(harbor密码)\n可选字段：Dimgtimeout(开发镜像保留的时间默认7天，0天表示用户过期需要手动清理harbor，单位是天)\n可选字段：Timgtimeout(测试镜像保留的时间默认30天，0天表示用户过期需要手动清理harbor，单位是天)\n可选字段：Timgtimeout(生产镜像保留的时间默认90天，0天表示用户过期需要手动清理harbor，单位是天)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "添加harbor",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Harbors参数",
+                        "name": "modules.Harbors",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/modules.Harbors"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/createjenkins": {
+            "post": {
+                "description": "格式：GET /api/v1/service/createjenkins",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "添加jenkins",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "jenkins信息",
+                        "name": "modules.Jenkins",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/modules.Jenkins"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/deleteharbor": {
+            "get": {
+                "description": "格式：GET /api/v1/service/deleteharbor?harbor=xxx",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "删除harbor(未完成，删除前需要查询所有项目都没有使用此harbor)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Harbors名称",
+                        "name": "harbor",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/getharborinfo": {
+            "get": {
+                "description": "格式：GET /api/v1/service/getharborinfo?harbor=xxx",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "查询harbor单条详情",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Harbors名称",
+                        "name": "harbor",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/getharborlist": {
+            "get": {
+                "description": "格式：GET /api/v1/service/getharborlist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "查询harbor列表(管理员页面展示表格)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Harbors名称",
+                        "name": "harbor",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/getharbornamelist": {
+            "get": {
+                "description": "格式：GET /api/v1/service/getharbornamelist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "查询harbor名称列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Harbors名称",
+                        "name": "harbor",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/getjenkinsjobsinfo": {
+            "get": {
+                "description": "格式：GET /api/v1/service/getjenkinsjobsinfo?jenkins=xxx\u0026jobname=xxx\njenkins:jenkins名称\njobname:job名称",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "查询jenkins job详情",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "jenkins名称",
+                        "name": "jenkins",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "job名称",
+                        "name": "jobname",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/getjenkinsjobslist": {
+            "get": {
+                "description": "格式：GET /api/v1/service/getjenkinsjobslist?jenkins=xxx\njenkins:jenkins名称",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "查询jenkins job列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "jenkins名称",
+                        "name": "jenkins",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/getjenkinslist": {
+            "get": {
+                "description": "格式：GET /api/v1/service/getjenkinslist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "查询jenkins列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/getjenkinsnamelist": {
+            "get": {
+                "description": "格式：GET /api/v1/service/getjenkinsnamelist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "查询jenkins名称列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/jenkinsinfo": {
+            "get": {
+                "description": "格式：GET /api/v1/service/jenkinsinfo?jenkins=xxx\njenkins：查询jenkins的名称",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "查询单条jenkins详情",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "查询的jenkins名称",
+                        "name": "jenkins",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/movejenkinsjobs": {
+            "get": {
+                "description": "格式：GET /api/v1/service/movejenkinsjobs\njenkins：源jenkins名称\ntojenkins: 目标jenkins名称\njobname：job名称(应用名称)\n迁移jenkins：jenkins、jobname、tojenkins均不能为空",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "迁移jenkins job(未完待续)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "jenkins job信息",
+                        "name": "JenkinsJobMove",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/v1.JenkinsJobMove"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/updatejenkins": {
+            "post": {
+                "description": "格式：GET /api/v1/service/controljenkins?jenkins=xxx\u0026type=1|2|3\u0026to\n必须字段：\njenkins：指定需要修改的jenkins名称\ntype：1表示启用，2表示禁用，3表示迁移(to=xxx必须，用于指定迁移的目标jenkins)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "jenkins状态控制(未完待续)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "jenkins名称",
+                        "name": "jenkins",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "操作",
+                        "name": "type",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "目标jenkins",
+                        "name": "to",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/updatejenkinsjobs": {
+            "get": {
+                "description": "格式：GET /api/v1/service/updatejenkinsjobs",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "service"
+                ],
+                "summary": "修改jenkins job详情(更新jenkins pipeline未完待续)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "jenkins job信息",
+                        "name": "modules.JenkinsJobs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/modules.JenkinsJobs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/admingetlist": {
+            "post": {
+                "description": "请求格式：{\"stype\":0,\"lines\":20,\"offset\":1,\"orderby\":\"id\"}\nstype为查询类型：0、查询新注册用户,1、查询激活用户，2、查询禁用用户，3、查询所有用户\nlines为查询条数，默认20条，最多不能查询100条\noffset查询页码，默认查询第1页\norderby查询排序列，默认为id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UsersAdmin"
+                ],
+                "summary": "获取用户列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "查询用户列表参数",
+                        "name": "UserlistSelectType",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/v1.UserlistSelectType"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok\" \"返回用户信息",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/chageinfo": {
+            "post": {
+                "description": "修改用户信息，可修改：签名、手机号、邮箱、描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "用户信息修改",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "修改用户信息",
+                        "name": "modules.UsersInfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/modules.UsersInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok\" \"返回用户信息",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/chagespass": {
+            "post": {
+                "description": "修改用户密码，直接在url参数中提交密码即可，例如：password=xxxxx\n用户修改密码后需要重新登录",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "用户修改密码",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "password参数",
+                        "name": "password",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/controls": {
+            "get": {
+                "description": "启用和禁用单个用户\n格式：GET /api/v1/users/controls?user=xxx\u0026do=1\nuser：输入用户名\ndo：操作，1表示启用，2表示禁用",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UsersAdmin"
+                ],
+                "summary": "单用户启用/禁用",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "启用/禁用用户名",
+                        "name": "user",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "启用：1，禁用：2",
+                        "name": "do",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok\" \"返回用户信息",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "用户批量启用和禁用\n格式：POST /api/v1/users/controls {\"doenable\":[\"x\",\"x\",\"x\"],\"dodisable\":[\"x\",\"x\",\"x\"]}\ndoenable：激活用户列表\ndodisable：禁用用户列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UsersAdmin"
+                ],
+                "summary": "批量用户启用/禁用",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "name": "dodisable",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "name": "doenable",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/createapitoken": {
+            "get": {
+                "description": "请求格式：GET /api/v1/users/createapitoken",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "用户创建API Token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/deleteapitoken": {
+            "get": {
+                "description": "请求格式：GET /api/v1/users/deleteapitoken",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "用户删除API Token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/disableapitoken": {
+            "get": {
+                "description": "请求格式：GET /api/v1/users/disableapitoken",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "用户停止API Token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/enableapitoken": {
+            "get": {
+                "description": "请求格式：GET /api/v1/users/enableapitoken",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "用户开启API Token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/getapitoken": {
+            "get": {
+                "description": "请求格式：GET /api/v1/users/getapitoken",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "用户获取API Token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "file",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/getlists": {
+            "get": {
+                "description": "获取用户列表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "获取用户列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/geturllist": {
+            "get": {
+                "description": "获取url列表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UsersAdmin"
+                ],
+                "summary": "获取url列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回url列表",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/geturlmethodlist": {
+            "get": {
+                "description": "返回格式：[{url,method},{url,method},{url,method}...]",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UsersAdmin"
+                ],
+                "summary": "获取url - method列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回url列表",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/logout": {
+            "get": {
+                "description": "用户注销：此功能只允许用户自己操作",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "用户注销登录接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/powerbyuser": {
+            "get": {
+                "description": "格式：GET /api/v1/users/powerbyuser?user=xxx",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UsersAdmin"
+                ],
+                "summary": "获取用户权限列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户",
+                        "name": "user",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/roleDelPower": {
+            "post": {
+                "description": "格式：post /api/v1/users/roleDelPower {\"role\":\"dev\",\"path\":\"/api/v1/userlogin\",\"method\":\"POST\"}\nrole：角色\npath：url接口\nmethod：调用方法",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UsersAdmin"
+                ],
+                "summary": "删除角色权限",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "body参数",
+                        "name": "RM",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/v1.RM"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok\" \"返回用户信息",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/rolePower": {
+            "post": {
+                "description": "格式：get /api/v1/users/rolePower?role=xxx",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "获取角色权限列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "角色名称",
+                        "name": "role",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/roleadd": {
+            "post": {
+                "description": "添加角色或给角色添加权限\n格式：{\"role\":\"dev\",\"path\":\"/api/v1/roleadd\",\"method\":\"POST\"}\nrole：角色\npath：url接口\nmethod：调用方法",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UsersAdmin"
+                ],
+                "summary": "添加角色权限",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "body参数",
+                        "name": "RM",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/v1.RM"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/roleadduser": {
+            "get": {
+                "description": "格式：GET /api/v1/users/roleadduser?role=xxx\u0026user=xxx",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UsersAdmin"
+                ],
+                "summary": "角色添加用户",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "角色",
+                        "name": "role",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户",
+                        "name": "user",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok\" \"返回用户信息",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/roledel": {
+            "get": {
+                "description": "格式：GET /api/v1/users/roledel?role=xxx",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UsersAdmin"
+                ],
+                "summary": "删除角色",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "角色名称",
+                        "name": "role",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/roledeluser": {
+            "get": {
+                "description": "格式：GET /api/v1/users/roledeluser?role=xxx\u0026user=xxx",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UsersAdmin"
+                ],
+                "summary": "角色删除用户",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "角色",
+                        "name": "role",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户",
+                        "name": "user",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok\" \"返回用户信息",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/rolelist": {
+            "post": {
+                "description": "获取权限角色列表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UsersAdmin"
+                ],
+                "summary": "获取角色列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/rolelistbyuser": {
+            "get": {
+                "description": "格式：GET /api/v1/users/rolelistbyuser?user=xxx",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UsersAdmin"
+                ],
+                "summary": "获取用户角色列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户",
+                        "name": "user",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/userinfo": {
+            "get": {
+                "description": "获取用户信息接口: get /api/v1/users/userinfo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "获取用户信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "Access-Token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回用户信息",
+                        "schema": {
+                            "$ref": "#/definitions/v1.Response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "modules.Harbors": {
+            "type": "object",
+            "properties": {
+                "ctime": {
+                    "type": "string"
+                },
+                "dimgtimeout": {
+                    "type": "integer"
+                },
+                "harbor": {
+                    "type": "string"
+                },
+                "hpass": {
+                    "type": "string"
+                },
+                "hurl": {
+                    "type": "string"
+                },
+                "huser": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "kname": {
+                    "type": "string"
+                },
+                "oimgtimeout": {
+                    "type": "integer"
+                },
+                "state": {
+                    "type": "integer"
+                },
+                "timgtimeout": {
+                    "type": "integer"
+                }
+            }
+        },
+        "modules.Jenkins": {
+            "type": "object",
+            "properties": {
+                "context": {
+                    "type": "string"
+                },
+                "ctime": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "jpass": {
+                    "type": "string"
+                },
+                "jurl": {
+                    "type": "string"
+                },
+                "juser": {
+                    "type": "string"
+                },
+                "kname": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "integer"
+                }
+            }
+        },
+        "modules.JenkinsJobs": {
+            "type": "object",
+            "properties": {
+                "Gpass": {
+                    "type": "string"
+                },
+                "Guser": {
+                    "type": "string"
+                },
+                "ctime": {
+                    "type": "string"
+                },
+                "gurl": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "jenkins": {
+                    "type": "string"
+                },
+                "jfolder": {
+                    "type": "string"
+                },
+                "jobname": {
+                    "type": "string"
+                },
+                "jtmp": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "integer"
+                }
+            }
+        },
+        "modules.Kubecmds": {
+            "type": "object",
+            "properties": {
+                "comname": {
+                    "type": "string"
+                },
+                "compath": {
+                    "type": "string"
+                },
+                "comvers": {
+                    "type": "string"
+                },
+                "ctime": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "state": {
+                    "type": "integer"
+                }
+            }
+        },
+        "modules.KubernetesConfigs": {
+            "type": "object",
+            "properties": {
+                "comname": {
+                    "type": "string"
+                },
+                "confpath": {
+                    "type": "string"
+                },
+                "ctime": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "kconfig": {
+                    "type": "string"
+                },
+                "kcontexts": {
+                    "type": "string"
+                },
+                "kenvrole": {
+                    "type": "integer"
+                },
+                "kname": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "integer"
+                }
+            }
+        },
+        "modules.ProjectApps": {
+            "type": "object",
+            "properties": {
+                "appname": {
+                    "type": "string"
+                },
+                "context": {
+                    "type": "string"
+                },
+                "ctime": {
+                    "type": "string"
+                },
+                "dtmp": {
+                    "type": "string"
+                },
+                "gitpass": {
+                    "type": "string"
+                },
+                "gittoken": {
+                    "type": "string"
+                },
+                "giturl": {
+                    "type": "string"
+                },
+                "gituser": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "langtype": {
+                    "type": "string"
+                },
+                "project": {
+                    "type": "string"
+                },
+                "route": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "modules.Projects": {
+            "type": "object",
+            "properties": {
+                "State": {
+                    "type": "integer"
+                },
+                "context": {
+                    "type": "string"
+                },
+                "ctime": {
+                    "type": "string"
+                },
+                "cuser": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "jenkins": {
+                    "type": "string"
+                },
+                "project": {
+                    "type": "string"
+                },
+                "repository": {
+                    "type": "string"
+                }
+            }
+        },
+        "modules.Users": {
+            "type": "object",
+            "properties": {
+                "autograph": {
+                    "type": "string"
+                },
+                "context": {
+                    "type": "string"
+                },
+                "ctime": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "ltime": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "ustat": {
+                    "type": "integer"
+                },
+                "utime": {
+                    "type": "string"
+                }
+            }
+        },
+        "modules.UsersInfo": {
+            "type": "object",
+            "properties": {
+                "autograph": {
+                    "type": "string"
+                },
+                "context": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "v1.JenkinsJobDo": {
+            "type": "object",
+            "properties": {
+                "jenkins": {
+                    "type": "string"
+                },
+                "jobname": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "v1.JenkinsJobMove": {
+            "type": "object",
+            "properties": {
+                "jenkins": {
+                    "type": "string"
+                },
+                "jobname": {
+                    "type": "string"
+                },
+                "tojenkins": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "v1.Pcu": {
+            "type": "object",
+            "properties": {
+                "dev": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "ops": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "project": {
+                    "type": "string"
+                },
+                "test": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "v1.RM": {
+            "type": "object",
+            "properties": {
+                "method": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                }
+            }
+        },
+        "v1.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "object"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "v1.UserlistSelectType": {
+            "type": "object",
+            "properties": {
+                "lines": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "orderby": {
+                    "type": "string"
+                },
+                "stype": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
